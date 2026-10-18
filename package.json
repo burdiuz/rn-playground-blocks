@@ -1,0 +1,211 @@
+{
+  "name": "@actualwave/rn-playground-blocks",
+  "version": "0.1.0",
+  "description": "Building blocks for React Native: themed components and containers, one subpath entry each.",
+  "type": "module",
+  "exports": {
+    "./badge": {
+      "types": "./types/badge/index.d.ts",
+      "import": "./badge/index.es.js",
+      "require": "./badge/index.js"
+    },
+    "./bottom-sheet": {
+      "types": "./types/bottom-sheet/index.d.ts",
+      "import": "./bottom-sheet/index.es.js",
+      "require": "./bottom-sheet/index.js"
+    },
+    "./button": {
+      "types": "./types/button/index.d.ts",
+      "import": "./button/index.es.js",
+      "require": "./button/index.js"
+    },
+    "./card": {
+      "types": "./types/card/index.d.ts",
+      "import": "./card/index.es.js",
+      "require": "./card/index.js"
+    },
+    "./carousel": {
+      "types": "./types/carousel/index.d.ts",
+      "import": "./carousel/index.es.js",
+      "require": "./carousel/index.js"
+    },
+    "./column": {
+      "types": "./types/column/index.d.ts",
+      "import": "./column/index.es.js",
+      "require": "./column/index.js"
+    },
+    "./date-field": {
+      "types": "./types/date-field/index.d.ts",
+      "import": "./date-field/index.es.js",
+      "require": "./date-field/index.js"
+    },
+    "./divider": {
+      "types": "./types/divider/index.d.ts",
+      "import": "./divider/index.es.js",
+      "require": "./divider/index.js"
+    },
+    "./drawer": {
+      "types": "./types/drawer/index.d.ts",
+      "import": "./drawer/index.es.js",
+      "require": "./drawer/index.js"
+    },
+    "./flow": {
+      "types": "./types/flow/index.d.ts",
+      "import": "./flow/index.es.js",
+      "require": "./flow/index.js"
+    },
+    "./icon-button": {
+      "types": "./types/icon-button/index.d.ts",
+      "import": "./icon-button/index.es.js",
+      "require": "./icon-button/index.js"
+    },
+    "./image": {
+      "types": "./types/image/index.d.ts",
+      "import": "./image/index.es.js",
+      "require": "./image/index.js"
+    },
+    "./input": {
+      "types": "./types/input/index.d.ts",
+      "import": "./input/index.es.js",
+      "require": "./input/index.js"
+    },
+    "./list": {
+      "types": "./types/list/index.d.ts",
+      "import": "./list/index.es.js",
+      "require": "./list/index.js"
+    },
+    "./menu": {
+      "types": "./types/menu/index.d.ts",
+      "import": "./menu/index.es.js",
+      "require": "./menu/index.js"
+    },
+    "./modal": {
+      "types": "./types/modal/index.d.ts",
+      "import": "./modal/index.es.js",
+      "require": "./modal/index.js"
+    },
+    "./package.json": "./package.json",
+    "./panel": {
+      "types": "./types/panel/index.d.ts",
+      "import": "./panel/index.es.js",
+      "require": "./panel/index.js"
+    },
+    "./progress": {
+      "types": "./types/progress/index.d.ts",
+      "import": "./progress/index.es.js",
+      "require": "./progress/index.js"
+    },
+    "./row": {
+      "types": "./types/row/index.d.ts",
+      "import": "./row/index.es.js",
+      "require": "./row/index.js"
+    },
+    "./scroll": {
+      "types": "./types/scroll/index.d.ts",
+      "import": "./scroll/index.es.js",
+      "require": "./scroll/index.js"
+    },
+    "./segmented-button": {
+      "types": "./types/segmented-button/index.d.ts",
+      "import": "./segmented-button/index.es.js",
+      "require": "./segmented-button/index.js"
+    },
+    "./select": {
+      "types": "./types/select/index.d.ts",
+      "import": "./select/index.es.js",
+      "require": "./select/index.js"
+    },
+    "./slider": {
+      "types": "./types/slider/index.d.ts",
+      "import": "./slider/index.es.js",
+      "require": "./slider/index.js"
+    },
+    "./spacer": {
+      "types": "./types/spacer/index.d.ts",
+      "import": "./spacer/index.es.js",
+      "require": "./spacer/index.js"
+    },
+    "./spinner": {
+      "types": "./types/spinner/index.d.ts",
+      "import": "./spinner/index.es.js",
+      "require": "./spinner/index.js"
+    },
+    "./stack": {
+      "types": "./types/stack/index.d.ts",
+      "import": "./stack/index.es.js",
+      "require": "./stack/index.js"
+    },
+    "./static": {
+      "types": "./types/static/index.d.ts",
+      "import": "./static/index.es.js",
+      "require": "./static/index.js"
+    },
+    "./tabs": {
+      "types": "./types/tabs/index.d.ts",
+      "import": "./tabs/index.es.js",
+      "require": "./tabs/index.js"
+    },
+    "./text": {
+      "types": "./types/text/index.d.ts",
+      "import": "./text/index.es.js",
+      "require": "./text/index.js"
+    },
+    "./theme": {
+      "types": "./types/theme.d.ts",
+      "import": "./theme/index.es.js",
+      "require": "./theme/index.js"
+    },
+    "./toggle": {
+      "types": "./types/toggle/index.d.ts",
+      "import": "./toggle/index.es.js",
+      "require": "./toggle/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rm -rf dist && rollup -c rollup.config.js",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@react-native-community/datetimepicker": "*",
+    "@react-native-community/slider": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-community/slider": {
+      "optional": true
+    },
+    "@react-native-community/datetimepicker": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@react-native-community/datetimepicker": "^8.6.0",
+    "@react-native-community/netinfo": "^11.5.2",
+    "@react-native-community/slider": "^5.1.2",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "expo": "~55.0.0",
+    "expo-battery": "~55.0.17",
+    "expo-clipboard": "~55.0.13",
+    "expo-keep-awake": "~55.0.8",
+    "expo-location": "~55.1.14",
+    "expo-notifications": "~55.0.27",
+    "expo-sensors": "~55.0.19",
+    "expo-sharing": "~55.0.19",
+    "expo-web-browser": "~55.0.16",
+    "jest": "^29.7.0",
+    "react": "^19.0.0",
+    "react-native": "0.83.6",
+    "rollup": "^4.60.2",
+    "rollup-plugin-copy": "^3.5.0",
+    "ts-jest": "^29.1.5",
+    "tslib": "^2.8.1",
+    "typescript": "^5.4.5"
+  }
+}
