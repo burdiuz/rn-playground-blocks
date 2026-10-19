@@ -33,7 +33,7 @@ Required peers: `react`, `react-native`. Optional peers, only needed for the blo
 - **`style`** — every block takes it. It is merged onto the block's root element *after* the block's own defaults, so it wins. There are no separate layout props (padding, margin, gap, align…): write `style={{ padding: 16, gap: 8 }}`. Where a block has more than one styled part it says so (`contentStyle`, `triggerStyle`, panel style).
 - **Controlled** — inputs and open/close containers hold no state of their own: pass the value and handle the change callback (`value` + `onChangeText`, `visible` + `onClose`, …). Exceptions are noted per block (`Tabs`, `Carousel`, `Select` dropdown keep their own page / open state).
 - **Colours** come from the theme (below); blocks never use hard-coded colours except where noted.
-- **Types** — every block exports its props interface from its own entry (`ButtonProps`, `SelectProps`, …), plus `SelectOption` (`/select`), `SegmentedOption` (`/segmented-button`) and `StaticAlign` (`/static`). `/theme` exports `BlocksColors`, `ColorRole`, `ColorMode` and `BlocksThemeProps`.
+- **Types** — every block exports its props interface from its own entry (`ButtonProps`, `SelectProps`, …), plus `SelectOption` (`/select`), `SegmentedOption` (`/segmented-button`) and `StaticAlign` (`/static`). `/theme` exports `BlocksColors`, `ColorRole`, `ColorMode`, `PaletteFunction` and `BlocksThemeProps`.
 - **Option values are strings** — `Select` and `SegmentedButton` options are `{ label: string; value: string }`.
 
 ### Controlled state example
@@ -85,6 +85,7 @@ import { BlocksThemeProvider, useBlocksColors, generatePalette, lightColors, dar
 | --- | --- | --- | --- |
 | `base` | `string` | — | Base hex colour (`'#2563EB'`); the roles are generated from it at runtime. |
 | `mode` | `'light' \| 'dark' \| 'auto'` | `'auto'` | `auto` follows the device colour scheme. |
+| `palette` | `(base, mode) => Partial<BlocksColors>` | `generatePalette` | Your own function that turns `base` into roles (`mode` is `'light'` or `'dark'`, already resolved). Called only when `base` is set; roles it omits fall back to the defaults; `colors` still wins. Define it outside the component or memoize it. Exported type: `PaletteFunction`. |
 | `colors` | `Partial<BlocksColors>` | — | Overrides single roles after generation (wins over `base`). Memoize it or define it outside the component, or the palette is recomputed on every render. |
 | `scale` | `number` | `1` | Multiplies the `IconButton` size and the focus ring (e.g. `1.5` on a TV). |
 

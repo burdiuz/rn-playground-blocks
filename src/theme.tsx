@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 
+import { resolveColors } from './internal/resolve-colors';
 import { generatePalette } from './palette';
 
 export { generatePalette, parseHex, readableOn, contrast, luminance } from './palette';
@@ -52,11 +53,16 @@ const ScaleContext = createContext(1);
 
 export type ColorMode = 'light' | 'dark' | 'auto';
 
+/** Turns a base colour into colour roles; roles it leaves out fall back to the defaults. */
+export type PaletteFunction = (base: string, mode: 'light' | 'dark') => Partial<BlocksColors>;
+
 export interface BlocksThemeProps {
   /** Base colour (`#rgb` / `#rrggbb`); the ten roles are derived from it at runtime with `generatePalette`. */
   base?: string;
   /** `auto` follows the device colour scheme. Default `auto`. */
   mode?: ColorMode;
+  /** Replaces `generatePalette` when `base` is given. Define it outside the component (or memoize it), or the palette is recomputed on every render. */
+  palette?: PaletteFunction;
   /** Explicit roles; take precedence over `base`. */
   colors?: Partial<BlocksColors>;
   /** Multiplies control sizes and the focus ring (e.g. `1.5` for a TV viewed from a distance). Default `1`. */
@@ -65,13 +71,12 @@ export interface BlocksThemeProps {
 }
 
 /** Provides the colour roles: generated from `base` + `mode`, or the defaults, with `colors` laid over them. */
-export function BlocksThemeProvider({ base, mode = 'auto', colors, scale = 1, children }: BlocksThemeProps) {
+export function BlocksThemeProvider({ base, mode = 'auto', palette = generatePalette, colors, scale = 1, children }: BlocksThemeProps) {
   const scheme = useColorScheme();
   const dark = mode === 'dark' || (mode === 'auto' && scheme === 'dark');
   const value = useMemo(() => {
-    const roles = base ? generatePalette(base, dark ? 'dark' : 'light') : dark ? darkColors : lightColors;
-    return colors ? { ...roles, ...colors } : roles;
-  }, [base, dark, colors]);
+    return resolveColors<BlocksColors>(dark ? darkColors : lightColors, base, dark ? 'dark' : 'light', palette, colors);
+  }, [base, dark, palette, colors]);
   return (
     <ThemeContext.Provider value={value}>
       <ScaleContext.Provider value={scale}>{children}</ScaleContext.Provider>
