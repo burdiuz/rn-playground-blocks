@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Field } from '../internal/field';
+import { FocusPressable } from '../internal/focus-pressable';
 import { useBlocksColors } from '../theme';
 
 export interface SelectOption {
@@ -28,10 +29,10 @@ export function Select({ label, options, value, onChange, variant = 'dropdown', 
     body = (
       <View style={styles.column}>
         {options.map((o) => (
-          <Pressable key={o.value} style={styles.radio} onPress={() => onChange?.(o.value)}>
+          <FocusPressable key={o.value} style={styles.radio} onPress={() => onChange?.(o.value)}>
             <Text style={[styles.mark, { color: c.primary }]}>{value === o.value ? '◉' : '○'}</Text>
             <Text style={[styles.text, { color: c.text }]}>{o.label}</Text>
-          </Pressable>
+          </FocusPressable>
         ))}
       </View>
     );
@@ -41,13 +42,13 @@ export function Select({ label, options, value, onChange, variant = 'dropdown', 
         {options.map((o) => {
           const on = value === o.value;
           return (
-            <Pressable
+            <FocusPressable
               key={o.value}
               style={[styles.chip, { borderColor: on ? c.primary : c.border, backgroundColor: on ? c.primary : c.surface }]}
               onPress={() => onChange?.(o.value)}
             >
               <Text style={[styles.text, { color: on ? c.onPrimary : c.text }]}>{o.label}</Text>
-            </Pressable>
+            </FocusPressable>
           );
         })}
       </View>
@@ -55,14 +56,14 @@ export function Select({ label, options, value, onChange, variant = 'dropdown', 
   } else {
     body = (
       <>
-        <Pressable style={[styles.chip, styles.dropdown, { backgroundColor: c.surface, borderColor: c.border }]} onPress={() => setOpen((v) => !v)}>
+        <FocusPressable style={[styles.chip, styles.dropdown, { backgroundColor: c.surface, borderColor: c.border }]} onPress={() => setOpen((v) => !v)}>
           <Text style={[styles.text, { color: c.text }]}>{options.find((o) => o.value === value)?.label ?? placeholder}</Text>
           <Text style={[styles.text, { color: c.mutedText }]}>{open ? '▴' : '▾'}</Text>
-        </Pressable>
+        </FocusPressable>
         {open && (
           <View style={[styles.menu, { backgroundColor: c.surface, borderColor: c.border }]}>
             {options.map((o) => (
-              <Pressable
+              <FocusPressable
                 key={o.value}
                 style={styles.option}
                 onPress={() => {
@@ -71,7 +72,7 @@ export function Select({ label, options, value, onChange, variant = 'dropdown', 
                 }}
               >
                 <Text style={[styles.text, { color: c.text }]}>{o.label}</Text>
-              </Pressable>
+              </FocusPressable>
             ))}
           </View>
         )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Switch, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { useFocusRing } from '../internal/focus';
 import { useBlocksColors } from '../theme';
 
 export interface ToggleProps {
@@ -13,9 +14,10 @@ export interface ToggleProps {
 
 export function Toggle({ label, value = false, onValueChange, variant = 'switch', style }: ToggleProps) {
   const c = useBlocksColors();
+  const { ring, handlers } = useFocusRing();
   if (variant === 'checkbox') {
     return (
-      <Pressable style={[styles.checkbox, style]} onPress={() => onValueChange?.(!value)}>
+      <Pressable style={[styles.checkbox, ring, style]} onPress={() => onValueChange?.(!value)} {...handlers}>
         <Text style={[styles.mark, { color: c.primary }]}>{value ? '☑' : '☐'}</Text>
         {label ? <Text style={[styles.label, { color: c.text }]}>{label}</Text> : null}
       </Pressable>

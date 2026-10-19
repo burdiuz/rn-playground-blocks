@@ -9,7 +9,7 @@ Install: `npm install @actualwave/rn-playground-blocks` (peers: `react`, `react-
 
 ## Rules
 
-- Wrap the tree in `<BlocksThemeProvider base="#hex" mode="light|dark|auto">` from `/theme` (optional; light defaults without it; `auto` follows the device scheme). `colors={{…}}` overrides single roles and wins over `base`.
+- Wrap the tree in `<BlocksThemeProvider base="#hex" mode="light|dark|auto">` from `/theme` (optional; light defaults without it; `auto` follows the device scheme). `colors={{…}}` overrides single roles and wins over `base`. `scale={1.5}` enlarges `IconButton` and the focus ring for TV. Pressable blocks show a focus ring under D-pad/keyboard focus; `Carousel` has ‹ › controls for remote paging.
 - `/theme` also exports `useBlocksColors()` (returns the roles: `primary onPrimary background surface text mutedText border accent danger success`), `generatePalette(base, 'light'|'dark')`, `lightColors`, `darkColors`, `parseHex`, `readableOn`, `contrast`, `luminance`, and types `BlocksColors`, `ColorRole`, `ColorMode`. Use `useBlocksColors()` for any custom styling instead of hard-coded colours.
 - Every block takes `style` (merged onto its root, wins over defaults). There are no padding/margin/gap/align props — write `style={{ padding: 16, gap: 8 }}`.
 - Inputs and open/close containers are controlled: pass the value and handle the change callback. Exceptions that keep their own state: `Tabs` (selection), `Carousel` (page), `Select` dropdown (open state).

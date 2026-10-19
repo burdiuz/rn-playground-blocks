@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { useFocusRing } from '../internal/focus';
 import { useBlocksColors } from '../theme';
 
 export interface TabProps {
@@ -32,17 +33,21 @@ export function Tabs({ initial = 0, style, children }: TabsProps) {
     <View style={[styles.root, style]}>
       <View style={[styles.strip, { borderBottomColor: c.border }]}>
         {tabs.map((t, i) => (
-          <Pressable
-            key={t.key ?? i}
-            onPress={() => setIndex(i)}
-            style={[styles.tab, i === current && { borderBottomColor: c.primary }]}
-          >
-            <Text style={[styles.title, { color: i === current ? c.primary : c.mutedText }]}>{t.props.title}</Text>
-          </Pressable>
+          <TabButton key={t.key ?? i} title={t.props.title} active={i === current} onPress={() => setIndex(i)} />
         ))}
       </View>
       <View style={styles.page}>{tabs[current]}</View>
     </View>
+  );
+}
+
+function TabButton({ title, active, onPress }: { title: string; active: boolean; onPress: () => void }) {
+  const c = useBlocksColors();
+  const { ring, handlers } = useFocusRing();
+  return (
+    <Pressable onPress={onPress} {...handlers} style={[styles.tab, active && { borderBottomColor: c.primary }, ring]}>
+      <Text style={[styles.title, { color: active ? c.primary : c.mutedText }]}>{title}</Text>
+    </Pressable>
   );
 }
 

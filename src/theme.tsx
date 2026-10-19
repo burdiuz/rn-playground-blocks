@@ -48,6 +48,7 @@ export const darkColors: BlocksColors = {
 };
 
 const ThemeContext = createContext<BlocksColors>(lightColors);
+const ScaleContext = createContext(1);
 
 export type ColorMode = 'light' | 'dark' | 'auto';
 
@@ -58,21 +59,32 @@ export interface BlocksThemeProps {
   mode?: ColorMode;
   /** Explicit roles; take precedence over `base`. */
   colors?: Partial<BlocksColors>;
+  /** Multiplies control sizes and the focus ring (e.g. `1.5` for a TV viewed from a distance). Default `1`. */
+  scale?: number;
   children?: React.ReactNode;
 }
 
 /** Provides the colour roles: generated from `base` + `mode`, or the defaults, with `colors` laid over them. */
-export function BlocksThemeProvider({ base, mode = 'auto', colors, children }: BlocksThemeProps) {
+export function BlocksThemeProvider({ base, mode = 'auto', colors, scale = 1, children }: BlocksThemeProps) {
   const scheme = useColorScheme();
   const dark = mode === 'dark' || (mode === 'auto' && scheme === 'dark');
   const value = useMemo(() => {
     const roles = base ? generatePalette(base, dark ? 'dark' : 'light') : dark ? darkColors : lightColors;
     return colors ? { ...roles, ...colors } : roles;
   }, [base, dark, colors]);
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>
+      <ScaleContext.Provider value={scale}>{children}</ScaleContext.Provider>
+    </ThemeContext.Provider>
+  );
 }
 
 /** Current colours (light defaults when no provider is mounted). */
 export function useBlocksColors(): BlocksColors {
   return useContext(ThemeContext);
+}
+
+/** Size multiplier from the provider (`1` when none is mounted). */
+export function useBlocksScale(): number {
+  return useContext(ScaleContext);
 }

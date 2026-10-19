@@ -1,8 +1,9 @@
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import React from 'react';
-import { Platform, Pressable, Text, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, Text, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Field } from '../internal/field';
+import { FocusPressable } from '../internal/focus-pressable';
 import { useBlocksColors } from '../theme';
 
 export interface DateFieldProps {
@@ -28,12 +29,12 @@ export function DateField({ label, value = '', onChange, placeholder = 'YYYY-MM-
       {Platform.OS === 'ios' ? (
         <DateTimePicker value={parsed} mode="date" display="compact" onChange={pick} />
       ) : (
-        <Pressable
+        <FocusPressable
           style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, backgroundColor: c.surface, borderColor: c.border }}
           onPress={() => DateTimePickerAndroid.open({ value: parsed, mode: 'date', onChange: pick })}
         >
           <Text style={{ color: value ? c.text : c.mutedText, fontSize: 16 }}>{value || placeholder}</Text>
-        </Pressable>
+        </FocusPressable>
       )}
     </Field>
   );

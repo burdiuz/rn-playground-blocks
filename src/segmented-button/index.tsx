@@ -1,7 +1,8 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Field } from '../internal/field';
+import { FocusPressable } from '../internal/focus-pressable';
 import { useBlocksColors } from '../theme';
 
 export interface SegmentedOption {
@@ -27,13 +28,13 @@ export function SegmentedButton({ label, options, value, onChange, error, style 
         {options.map((o, i) => {
           const on = o.value === value;
           return (
-            <Pressable
+            <FocusPressable
               key={o.value}
               onPress={() => onChange?.(o.value)}
               style={[styles.item, i > 0 && { borderLeftWidth: 1, borderLeftColor: c.primary }, on && { backgroundColor: c.primary }]}
             >
               <Text style={[styles.text, { color: on ? c.onPrimary : c.primary }]}>{o.label}</Text>
-            </Pressable>
+            </FocusPressable>
           );
         })}
       </View>

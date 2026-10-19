@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { useFocusRing } from '../internal/focus';
 import { useBlocksColors } from '../theme';
 
 export interface PanelProps {
@@ -14,9 +15,10 @@ export interface PanelProps {
 /** Collapsible section; the owner keeps `open`. */
 export function Panel({ title, open = false, onToggle, style, children }: PanelProps) {
   const c = useBlocksColors();
+  const { ring, handlers } = useFocusRing();
   return (
     <View style={[styles.panel, { borderColor: c.border, backgroundColor: c.surface }, style]}>
-      <Pressable style={styles.head} onPress={onToggle}>
+      <Pressable style={[styles.head, ring]} onPress={onToggle} {...handlers}>
         <Text style={[styles.title, { color: c.text }]}>{title}</Text>
         <Text style={[styles.arrow, { color: c.mutedText }]}>{open ? '▾' : '▸'}</Text>
       </Pressable>

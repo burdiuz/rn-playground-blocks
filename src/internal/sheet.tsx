@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { FocusPressable } from './focus-pressable';
 import { useBlocksColors } from '../theme';
 
 /** Shared overlay for `Modal` and `Drawer`. */
@@ -17,13 +18,13 @@ export function Sheet({ visible, onClose, title, panel, outer, style, animation 
   const c = useBlocksColors();
   return (
     <Modal visible={visible} transparent animationType={animation} onRequestClose={onClose}>
-      <Pressable style={[styles.overlay, outer]} onPress={onClose}>
-        <Pressable style={[panel, { backgroundColor: c.surface, borderColor: c.border }, style]} onPress={() => {}}>
+      <Pressable style={[styles.overlay, outer]} onPress={onClose} focusable={false}>
+        <Pressable style={[panel, { backgroundColor: c.surface, borderColor: c.border }, style]} onPress={() => {}} focusable={false}>
           <View style={styles.head}>
             <Text style={[styles.title, { color: c.text }]}>{title}</Text>
-            <Pressable onPress={onClose}>
+            <FocusPressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close" hasTVPreferredFocus style={styles.closeBtn}>
               <Text style={[styles.close, { color: c.mutedText }]}>✕</Text>
-            </Pressable>
+            </FocusPressable>
           </View>
           {children}
         </Pressable>
@@ -37,4 +38,5 @@ const styles = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { fontSize: 18, fontWeight: '700' },
   close: { fontSize: 20 },
+  closeBtn: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
 });

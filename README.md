@@ -75,6 +75,7 @@ import { BlocksThemeProvider, useBlocksColors, generatePalette, lightColors, dar
 | `BlocksThemeProvider` | Provides the colour roles to all blocks below it. Optional: without it blocks use `lightColors`. |
 | `useBlocksColors()` | Returns the current `BlocksColors`, e.g. `style={{ backgroundColor: useBlocksColors().surface }}`. |
 | `generatePalette(base, mode)` | Derives the ten roles from one base colour; `mode` is `'light'` or `'dark'`. |
+| `useBlocksScale()` | Current size multiplier from the provider (`1` by default). |
 | `lightColors`, `darkColors` | Default role sets (used when no `base` is given). |
 | `parseHex`, `readableOn`, `contrast`, `luminance` | Colour helpers (`readableOn` picks black/white text by WCAG contrast). |
 
@@ -85,8 +86,13 @@ import { BlocksThemeProvider, useBlocksColors, generatePalette, lightColors, dar
 | `base` | `string` | — | Base hex colour (`'#2563EB'`); the roles are generated from it at runtime. |
 | `mode` | `'light' \| 'dark' \| 'auto'` | `'auto'` | `auto` follows the device colour scheme. |
 | `colors` | `Partial<BlocksColors>` | — | Overrides single roles after generation (wins over `base`). Memoize it or define it outside the component, or the palette is recomputed on every render. |
+| `scale` | `number` | `1` | Multiplies the `IconButton` size and the focus ring (e.g. `1.5` on a TV). |
 
 Colour roles (`BlocksColors` / `ColorRole`): `primary`, `onPrimary`, `background`, `surface`, `text`, `mutedText`, `border`, `accent`, `danger`, `success`.
+
+## Remote / keyboard focus
+
+Every pressable block (`Button`, `IconButton`, `Tabs`, `Panel`, `Toggle` checkbox, `Select`, `SegmentedButton`, `DateField`, the close button of `Modal`/`Drawer`/`BottomSheet`/`Menu`) draws a 3 dp outline (colour `text`, times `scale`) while it holds D-pad or hardware-keyboard focus. The close button of a sheet asks for preferred focus, so a remote lands inside an opened dialog. `Carousel` shows focusable ‹ › controls beside its dots, so pages can be changed without swiping. Needs no setup; on a build without TV support the focus handlers simply never fire.
 
 ## Components
 

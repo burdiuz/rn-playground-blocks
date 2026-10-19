@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, type StyleProp, type ViewStyle } from 'react-native';
 
-import { useBlocksColors } from '../theme';
+import { useFocusRing } from '../internal/focus';
+import { useBlocksColors, useBlocksScale } from '../theme';
 
 export interface IconButtonProps {
   /** A glyph string (emoji or symbol such as `＋`, `☰`) or any element, e.g. an `@expo/vector-icons` icon. */
@@ -17,23 +18,29 @@ export interface IconButtonProps {
 /** Round button with a glyph instead of a text label. */
 export function IconButton({ icon, label, variant = 'ghost', onPress, disabled, style }: IconButtonProps) {
   const c = useBlocksColors();
+  const scale = useBlocksScale();
+  const { ring, handlers } = useFocusRing();
+  const size = Math.round(44 * scale);
   const bg = variant === 'primary' ? c.primary : variant === 'danger' ? c.danger : undefined;
   const fg = variant === 'primary' || variant === 'danger' ? c.onPrimary : c.primary;
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled}
+      {...handlers}
       accessibilityRole="button"
       accessibilityLabel={label ?? (typeof icon === 'string' ? icon : undefined)}
       style={({ pressed }) => [
         styles.base,
+        { width: size, height: size, borderRadius: size / 2 },
         bg ? { backgroundColor: bg } : null,
         variant === 'outline' ? { borderWidth: 1, borderColor: c.primary } : null,
         (pressed || disabled) && { opacity: disabled ? 0.5 : 0.7 },
+        ring,
         style,
       ]}
     >
-      {typeof icon === 'string' ? <Text style={[styles.icon, { color: fg }]}>{icon}</Text> : icon}
+      {typeof icon === 'string' ? <Text style={[styles.icon, { color: fg, fontSize: Math.round(22 * scale) }]}>{icon}</Text> : icon}
     </Pressable>
   );
 }
